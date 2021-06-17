@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "DoneWithit",
+    "slug": "DoneWithit",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "firebase": {
+        "apiKey": "AIzaSyBiKcpS2fPskADjuOEajSmd20xMbJJxo-A",
+      "authDomain": "drugnotifier.firebaseapp.com",
+      "projectId": "drugnotifier",
+      "storageBucket": "drugnotifier.appspot.com",
+      "messagingSenderId": "810645411854",
+      "appId": "1:810645411854:web:916f2db6f496e2455ec45f",
+      "measurementId": "G-Q4267YQY3R"
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+    "extends":[ "eslint-config-rallycoding","eslint:recommended"],
+    "rules": {
+        "react/require-extension": "off",
+        "react/sort-comp":"off",
+        "no-undef ": 0
+        
+      }
+}

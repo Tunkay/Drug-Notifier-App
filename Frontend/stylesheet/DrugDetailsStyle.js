@@ -1,0 +1,56 @@
+import { StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
+  addDrugButton: {
+    width: 170,
+    backgroundColor: 'dodgerblue',
+    padding: 10,
+    margin: 15,
+    alignItems: 'center',
+    borderWidth: 1,
+    textShadowColor: 'black',
+  },
+  deleteDrugButton: {
+    width: 80,
+    height: 40,
+    backgroundColor: 'indianred',
+    padding: 10,
+    margin: 15,
+    alignItems: 'center',
+    borderWidth: 1,
+  },
+  modifyDrugButton: {
+    width: 80,
+    height: 40,
+    backgroundColor: 'honeydew',
+    padding: 10,
+    margin: 15,
+    alignItems: 'center',
+    borderWidth: 1,
+  },
+  footer: {
+    position: 'absolute',
+    flex: 0.1,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'white',
+    height: 80,
+    alignItems: 'center',
+  },
+  prescriptionNotFoundText: {
+    color: 'grey',
+    marginTop: '50%',
+    marginLeft: 130,
+   },
+  cardView: { marginLeft: 90, justifyContent: 'center' },
+  cardTextView: { color: 'teal', fontWeight: 'bold' },
+  bodyAlignment: { flexDirection: 'row' },
+  buttonAlignment: { flexDirection: 'row-reverse' },
+  buttonTextStyle: { alignItems: 'center', fontWeight: 'bold' },
+  cardContentView: { marginLeft: 90, justifyContent: 'center' },
+  mainView: { flex: 1 },
+  bodyView: { flex: 0.9 },
+  fittingTextStyle: { flexShrink: 1 },
+});
+export default styles;
