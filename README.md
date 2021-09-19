@@ -5,9 +5,9 @@
 This project aims to be a strong foundation for react-native applications. It provides a clear and organized structure, core dependencies, and boilerplate to jumpstart development.
 
 ## Tech Stack Used.
-1.)Frontend- React Native.
-2.)Backend- Mysql.
-3.)Spring Boot Application for the management of APIs and business logic.
+1.)Frontend- React Native.<br />
+2.)Backend- Mysql.<br />
+3.)Spring Boot Application for the management of APIs and business logic.<br />
 
 
 ## Steps to run the app
