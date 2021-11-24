@@ -57,15 +57,15 @@ class ServiceLayerTests {
 	private MockMvc mockMvc;
 
 //Test the get function from the database Login  using mockito.
-	@Test
-	public void getfromDatabseTest() {
-		String username = "Danile";
-		String password="USA";
-		Login log=new Login("Danile","USA");
-		when(login.getOne(username))
-				.thenReturn(log);
-		assertEquals(log, meds.getUserLogin(username,password));
-	}
+//	@Test
+//	public void getfromDatabseTest() {
+//		String username = "Danile";
+//		String password="USA";
+//		Login log=new Login("Danile","USA");
+//		when(login.getOne(username))
+//				.thenReturn(log);
+//		assertEquals(log, meds.getUserLogin(username,password));
+//	}
 //Testing the insert operation into database Register using mockito.
 	@Test
 	public void InsertintoLoginTableTest() throws UserAlreadyExistsException, SQLIntegrityConstraintViolationException {

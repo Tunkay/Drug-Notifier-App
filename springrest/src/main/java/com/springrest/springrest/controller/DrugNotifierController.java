@@ -1,6 +1,8 @@
 //Controller Layer.
 package com.springrest.springrest.controller;
 import org.springframework.web.bind.annotation.RestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.springrest.springrest.entities.Admin;
 import com.springrest.springrest.entities.Login;
@@ -9,13 +11,23 @@ import com.springrest.springrest.entities.Patient;
 import com.springrest.springrest.entities.Physician;
 import com.springrest.springrest.entities.Prescription;
 import com.springrest.springrest.exception.UserAlreadyExistsException;
+//import com.springrest.springrest.model.JwtRequest;
+//import com.springrest.springrest.model.JwtResponse;
 import com.springrest.springrest.services.MedService;
+import com.springrest.springrest.services.MedServiceImplementation;
+//import com.springrest.springrest.services.UserService;
+import com.springrest.springrest.utility.JWTUtility;
+
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,18 +36,50 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 public class DrugNotifierController {
+	
+	@Autowired
+    private JWTUtility jwtUtility;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+	
 	@Autowired
 	private MedService meds; // Object of Service class which is autowired to the controller.
 	// Login Validation Function with getMapping Two attributes.
+	
+	@Autowired
+	private MedServiceImplementation medServiceImplementation;
+	
+	@GetMapping("/")
+    public String home() {
+        return "Welcome to Drug Notifier App!!";
+    }	
+	
+	@PostMapping("/home/{userName}/{password}")
+	public ResponseEntity<String> validationCredentials(@PathVariable String userName, @PathVariable String password) throws Exception {
+		try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            userName,
+                            password
+                    )
+            );
+        } catch (BadCredentialsException e) {
+            throw new Exception("INVALID_CREDENTIALS", e);
+        }
+		
+		final UserDetails userDetails = this.medServiceImplementation.loadUserByUsername(userName);
+		
+		final String token = jwtUtility.generateToken(userDetails);
 
-	@GetMapping("/home/{userName}/{password}")
-	public ResponseEntity<String> validationCredentials(@PathVariable String userName, @PathVariable String password) {
-		Login loginObj = this.meds.getUserLogin(userName, password);
-		if (loginObj.getPassword().equals(password))
-			return new ResponseEntity<>("Successful", HttpStatus.OK);
+		if (userDetails.getPassword().equals(password))
+			return new ResponseEntity<>(token, HttpStatus.OK);
 		else
 			return new ResponseEntity<>("Username or password wrong", HttpStatus.BAD_REQUEST);
 	}
+	
+	
+	
 	// Function to get all username List from registration.
 	@GetMapping("/GetAllUsers")
 	public ResponseEntity<List> checkExistence() {

@@ -62,20 +62,20 @@ public class ControllerTests {
 	public void getPatientFailure() throws Exception {
 		this.mockMvc.perform(get("/GetPatient/{Username}", "Shenoyji")).andExpect(status().isBadRequest());
 	}
-	@Test
-	public void ValidationCredentialsTest() throws Exception {
-		Login mockLogin = new Login("Mayank", "12345");
-		when(meds.getUserLogin("Mayank", "12345")).thenReturn(mockLogin);
-		this.mockMvc.perform(get("/home/{Username}/{Password}", "Mayank", "12345")).andExpect(status().isOk())
-				.andExpect(content().string("Successful"));
-	}
-	@Test
-	public void ValidationCredentialsFailureTest() throws Exception {
-		Login mockLogin = new Login("Mayank", "12345");
-		when(meds.getUserLogin("Mayank", "12")).thenReturn(mockLogin);
-		this.mockMvc.perform(get("/home/{Username}/{Password}", "Mayank", "12")).andExpect(status().isBadRequest())
-				.andExpect(content().string("Username or password wrong"));
-	}
+//	@Test
+//	public void ValidationCredentialsTest() throws Exception {
+//		Login mockLogin = new Login("Mayank", "12345");
+//		when(meds.getUserLogin("Mayank", "12345")).thenReturn(mockLogin);
+//		this.mockMvc.perform(get("/home/{Username}/{Password}", "Mayank", "12345")).andExpect(status().isOk())
+//				.andExpect(content().string("Successful"));
+//	}
+//	@Test
+//	public void ValidationCredentialsFailureTest() throws Exception {
+//		Login mockLogin = new Login("Mayank", "12345");
+//		when(meds.getUserLogin("Mayank", "12")).thenReturn(mockLogin);
+//		this.mockMvc.perform(get("/home/{Username}/{Password}", "Mayank", "12")).andExpect(status().isBadRequest())
+//				.andExpect(content().string("Username or password wrong"));
+//	}
 	@Test
 	public void CheckPatientSuccessTest() throws Exception {
 		Login mockLoginobject1 = new Login("Mayank", "12345");

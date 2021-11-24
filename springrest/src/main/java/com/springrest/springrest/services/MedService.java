@@ -4,6 +4,8 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.springrest.springrest.entities.Admin;
 import com.springrest.springrest.entities.Login;
 import com.springrest.springrest.entities.Medication;
@@ -18,8 +20,6 @@ public String Register(Login loginObj) throws UserAlreadyExistsException, SQLInt
 public Admin registerPhysician(Long adminId,Physician physician);
 //Patient Registration
 public Patient registerPatient(Patient patient);
-//Validate Credentials
-public Login getUserLogin(String userName, String password);
 //Check the existence of User for the form validation
 public  List<Login> findAllUserLogin () ;
 //getAll Patient by username.
@@ -43,5 +43,7 @@ public Prescription getPrescription(Long prescriptionId);
 //Getting admin info.
 public Admin getAdmin(String username);
 
+//// Validating User
+//public Login validate(String username, String password);
 
 }
