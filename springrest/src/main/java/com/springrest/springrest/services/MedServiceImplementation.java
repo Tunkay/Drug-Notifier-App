@@ -1,9 +1,15 @@
 package com.springrest.springrest.services;
 
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.springrest.springrest.dao.AdminDao;
@@ -27,7 +33,7 @@ import com.springrest.springrest.exception.UserAlreadyExistsException;
  */
 
 @Service
-public class MedServiceImplementation implements MedService {
+public class MedServiceImplementation implements MedService, UserDetailsService{
 	@Autowired
 	private LoginDao logindao; // Login Repository for the CRUD operations in the database.
 	@Autowired
@@ -41,6 +47,12 @@ public class MedServiceImplementation implements MedService {
 	// Register Function Definition
 	@Autowired
 	private AdminDao admindao;
+	
+	@Autowired
+    private AuthenticationManager authenticationManager;
+	
+	
+	
 	@Override
 	public String Register(Login loginObj) throws UserAlreadyExistsException, SQLIntegrityConstraintViolationException {
 		// Checking if user exists otherwise exception is thrown
@@ -52,6 +64,7 @@ public class MedServiceImplementation implements MedService {
 			throw new UserAlreadyExistsException("The User Already Exists");
 		}
 	}
+	
 	// Physician Register Function
 	@Override
 	public Admin registerPhysician(Long adminId,Physician physician) {
@@ -66,31 +79,36 @@ public class MedServiceImplementation implements MedService {
 			return null;
 		}
 	}
+	
 	// Patient Register Function
 	@Override
 	public Patient registerPatient(Patient patient) {
 		patientdao.save(patient);
 		return patient;
 	}
-	// Validate Credentials Function
+	
 	@Override
-	public Login getUserLogin(String userName, String password) {
-		return logindao.getOne(userName);
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		return new User(logindao.getOne(username).getUsername(),logindao.getOne(username).getPassword(),new ArrayList<>());
 	}
+
 	// Getting all users from database.
 	@Override
 	public List<Login> findAllUserLogin() throws EntityNotFoundException {
 		return logindao.findAll();
 	}
+	
 	// Get Patient by id.
 	public Patient getAll(Long P_id) {
 		return patientdao.getOne(P_id);
 	}
+	
 	// Getting Patient by attributes.
 	@Override
 	public Patient getPatient(String Username) {
 		return patientdao.findbyattributes(Username);
 	}
+	
 	// Adding Prescription to patient
 	/*
 	 * To add prescription in the patient: 1.Find the existing patient by id 2.Set
@@ -134,6 +152,7 @@ public class MedServiceImplementation implements MedService {
 			return null;
 		}
 	}
+	
 	// Deleting the prescription by its id.
 	@Override
 	public Boolean deletePrescription(Long prescription_id) {
@@ -156,11 +175,13 @@ public class MedServiceImplementation implements MedService {
 			return null;
 		}
 	}
+	
 	// Getting Physician by attributes.
 	@Override
 	public Physician getPhysician(String Username) {
 		return physiciandao.findphysicianbyattributes(Username);
 	}
+	
 	// Deleting Drugs of a prescription.
 	@Override
 	public Boolean deleteDrug(Long drug_id) {
@@ -170,16 +191,19 @@ public class MedServiceImplementation implements MedService {
 		else
 			return true;
 	}
+	
 	// Getting prescription by prescription id.
 	@Override
 	public Prescription getPrescription(Long prescription_id) {
 		return prescription.findById(prescription_id).get();
 	}
+	
 	@Override
 	public Patient getAll(String usrname) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 	@Override
 	public Admin getAdmin(String username) {
 		return admindao.findbyattributes(username);
